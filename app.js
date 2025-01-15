@@ -2,14 +2,14 @@ import 'dotenv/config';
 import axios from 'axios';
 
 const apiKey = process.env.NEWS_API_KEY;
-const country = 'es'; 
+const country = 'us'; 
 const category = 'technology'; 
 const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
 
 // Función para obtener y mostrar noticias
 const fetchNews = async () => {
   try {
-    console.log('Obteniendo noticias de España...');
+    console.log('Obteniendo noticias de USA...');
     const response = await axios.get(url);
     const articles = response.data.articles;
 
