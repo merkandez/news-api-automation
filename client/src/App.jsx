@@ -1,15 +1,20 @@
-import { useState } from 'react';
 import axios from 'axios';
+import { useState } from 'react';
+
 const App = () => {
-  const [country, setCountry] = useState('us');
   const [category, setCategory] = useState('technology');
+  const [keyword, setKeyword] = useState('');
   const [status, setStatus] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('TU_WEBHOOK_URL', { country, category });
+      const response = await axios.post(import.meta.env.VITE_WEBHOOK_URL, {
+        category,
+        keyword,
+      });
+
       if (response.status === 200) {
         setStatus('Flujo ejecutado con éxito');
       }
@@ -24,29 +29,26 @@ const App = () => {
       <h1>News Automation Dashboard</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>País:</label>
-          <select value={country} onChange={(e) => setCountry(e.target.value)}>
-            <option value='us'>Estados Unidos</option>
-            <option value='es'>España</option>
-            <option value='fr'>Francia</option>
-            <option value='de'>Alemania</option>
+          <label>Categoría:</label>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="technology">Tecnología</option>
+            <option value="business">Negocios</option>
+            <option value="sports">Deportes</option>
+            <option value="health">Salud</option>
           </select>
         </div>
 
         <div>
-          <label>Categoría:</label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value='technology'>Tecnología</option>
-            <option value='business'>Negocios</option>
-            <option value='sports'>Deportes</option>
-            <option value='health'>Salud</option>
-          </select>
+          <label>Palabra clave (opcional):</label>
+          <input
+            type="text"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="Ej: Inteligencia"
+          />
         </div>
 
-        <button type='submit'>Ejecutar flujo</button>
+        <button type="submit">Ejecutar flujo</button>
       </form>
 
       {status && <p>{status}</p>}
