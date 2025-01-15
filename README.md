@@ -1,2 +1,2 @@
 # news-api-automation
-Pequeño proyecto de automatización utilizando Make, Zapier y una API de noticias
+Pequeño proyecto de automatización utilizando Make y una API de noticias
