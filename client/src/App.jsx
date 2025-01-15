@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import axios from 'axios';
+const App = () => {
+  const [country, setCountry] = useState('us');
+  const [category, setCategory] = useState('technology');
+  const [status, setStatus] = useState(null);
 
-function App() {
-  const [count, setCount] = useState(0)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('TU_WEBHOOK_URL', { country, category });
+      if (response.status === 200) {
+        setStatus('Flujo ejecutado con éxito');
+      }
+    } catch (error) {
+      setStatus('Error al conectar con el webhook');
+      console.error('Error:', error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div style={{ padding: '20px' }}>
+      <h1>News Automation Dashboard</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>País:</label>
+          <select value={country} onChange={(e) => setCountry(e.target.value)}>
+            <option value='us'>Estados Unidos</option>
+            <option value='es'>España</option>
+            <option value='fr'>Francia</option>
+            <option value='de'>Alemania</option>
+          </select>
+        </div>
 
-export default App
+        <div>
+          <label>Categoría:</label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value='technology'>Tecnología</option>
+            <option value='business'>Negocios</option>
+            <option value='sports'>Deportes</option>
+            <option value='health'>Salud</option>
+          </select>
+        </div>
+
+        <button type='submit'>Ejecutar flujo</button>
+      </form>
+
+      {status && <p>{status}</p>}
+    </div>
+  );
+};
+
+export default App;
