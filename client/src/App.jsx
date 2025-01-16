@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-
+import './App.css';
 const App = () => {
   const [category, setCategory] = useState('technology');
   const [keyword, setKeyword] = useState('');
@@ -25,7 +25,7 @@ const App = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="container">
       <h1>News Automation Dashboard</h1>
       <form onSubmit={handleSubmit}>
         <div>
