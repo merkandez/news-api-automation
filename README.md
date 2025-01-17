@@ -82,4 +82,4 @@ npm run dev
 
 La aplicación estará disponible en http://localhost:5173.
 
-### Para ver mas detalles de la configuración de [Make](https://www.make.com/) en el archivo: make-scenario-setup.md
+### Para ver más detalles de la configuración de [Make](./make-scenario-setup.md)
